@@ -1,0 +1,201 @@
+<context>
+# Overview  
+4thepeople is an iOS application designed to help users stay informed and connected with their elected representatives. The app provides simplified, real-time updates on representatives' activity and voting behavior, making civic engagement more accessible. By bridging the gap between citizens and their elected officials, 4thepeople empowers users to make informed decisions and actively participate in the democratic process.
+
+# Core Features  
+## Onboarding & Location
+- User authentication via email/password or Apple login
+- Location access retrieval (with manual ZIP code entry alternative)
+- Automatic fetching of elected representatives using Google Civic Info API
+  
+## Representative Profiles
+- Comprehensive profiles for each representative including name, photo, title, party affiliation
+- District information and contact details (email, phone, website, social media)
+- Biographical information and committee assignments
+  
+## Activity Feed
+- Recent votes with bill details, representative's position, and AI-generated summaries
+- Upcoming legislation with expected voting dates and representative's projected stance
+- Direct links to full bill text on congress.gov
+  
+## Notifications
+- Customizable alerts for upcoming votes, passed legislation, and breaking news
+- Per-representative notification settings for personalized updates
+  
+## Saved Representatives
+- Ability to favorite and closely track specific representatives
+- Dedicated "Watchlist" section for followed representatives
+  
+## Settings
+- Location management and notification preferences
+- Privacy controls and account management
+
+# User Experience  
+## User Personas
+- Politically engaged citizens seeking to monitor their representatives
+- Civic-minded individuals who want to stay informed but lack time for extensive research
+- Community organizers tracking legislative issues relevant to their causes
+
+## Key User Flows
+- Onboarding: Sign up → Location access → Representative discovery
+- Daily check-in: View activity feed → Read bill summaries → Save items of interest
+- Engagement: Receive notification → Review vote/bill → Contact representative
+  
+## UI/UX Considerations
+- Clean, intuitive interface prioritizing readability of complex information
+- Simplified bill summaries in plain language for easy comprehension
+- Mobile-optimized design for quick updates on the go
+- Visually distinguishing representatives by party while maintaining neutral presentation
+</context>
+<PRD>
+# Technical Architecture  
+## Data Models
+### User
+- `id`: Unique identifier
+- `email`: User's email address
+- `passwordHash`: Securely stored password
+- `location`: Geographic data (latitude, longitude, ZIP code, city, state)
+- `followedReps`: Array of representative IDs the user follows
+- `notificationPrefs`: Object mapping representative IDs to notification preferences
+
+### Representative
+- `id`: Unique identifier
+- `fullName`: Representative's full name
+- `photoUrl`: URL to representative's official photo
+- `chamber`: Legislative body ('House', 'Senate', 'Local')
+- `district`: Electoral district information
+- `party`: Political party affiliation
+- `bio`: Biographical information
+- `contactInfo`: Communication channels (email, phone, social media, website)
+- `committeeMemberships`: Array of committee assignments
+- `votes`: Array of vote records
+- `upcomingVotes`: Array of scheduled bills
+
+### Vote
+- `id`: Unique identifier
+- `billId`: Reference to associated bill
+- `repId`: Reference to representative
+- `chamber`: Chamber where vote occurred
+- `voteDate`: Date and time of vote
+- `position`: Representative's stance ('Yea', 'Nay', 'Abstain')
+- `summary`: AI-generated plain language summary
+
+### Bill
+- `id`: Unique identifier
+- `title`: Official bill title
+- `summary`: Simplified explanation
+- `fullTextUrl`: Link to complete bill text
+- `scheduledDate`: Expected vote date
+- `status`: Current status ('Scheduled', 'Passed', 'Failed', 'In Committee')
+- `sponsors`: Array of sponsoring representatives
+- `topics`: Array of issue categories
+
+## APIs and Integrations
+### Google Civic Information API
+- Provides representative data based on geographic location
+- Called during initial onboarding and when user updates location
+
+### api.congress.gov
+- Source for official legislative data
+- Endpoints for member information, voting records, and bill details
+
+### AI Summarization Service
+- OpenAI API or custom model implementation
+- Processes legislative text to generate concise, accessible summaries
+
+## Infrastructure Requirements
+### Frontend
+- Swift/SwiftUI for native iOS development
+- Combine framework for reactive programming
+- LocationManager for geographic services
+- Push notification implementation
+
+### Backend
+- Node.js/Express or Firebase Functions for API handling
+- PostgreSQL or Firebase Firestore for data persistence
+- Scheduled background jobs for API polling and data updates
+
+# Development Roadmap  
+## Phase 1: MVP Release
+- User authentication and location-based representative discovery
+- Basic representative profiles with contact information
+- Recent voting history with AI-generated summaries
+- Simple notification system for important votes
+- Ability to save/follow specific representatives
+
+## Phase 2: Enhanced Engagement
+- Expanded representative activity tracking
+- Improved AI summarization with stance analysis
+- More granular notification preferences
+- In-app representative contact functionality
+- Social sharing capabilities
+
+## Phase 3: Advanced Features
+- AI chatbot for querying representatives' positions
+- Comparative analysis between representatives
+- Direct civic engagement tools (call/write buttons)
+- Engagement gamification with streaks and achievements
+- Election cycle information and ballot previews
+
+# Logical Dependency Chain
+## Foundation Components (Build First)
+- User authentication system
+- Location services integration
+- Google Civic API connection
+- Basic data models and storage
+
+## Core Functionality (Build Second)
+- Representative profile display
+- API integration with congress.gov
+- Basic activity feed implementation
+- Simple notification framework
+
+## Enhanced Features (Build Third)
+- AI summarization integration
+- Advanced filtering and search capabilities
+- Favorite/follow functionality
+- Push notification system
+
+## Polish and Optimization (Build Last)
+- UI refinements and performance optimization
+- Analytics implementation
+- Accessibility improvements
+- Final testing and quality assurance
+
+# Risks and Mitigations  
+## Technical Challenges
+- **Risk**: API rate limits from Google Civic and Congress.gov APIs
+  **Mitigation**: Implement caching strategy and background data refresh
+
+- **Risk**: AI summarization accuracy for complex legislation
+  **Mitigation**: Start with human-reviewed summaries for critical bills, implement feedback mechanism
+
+- **Risk**: Data synchronization across multiple sources
+  **Mitigation**: Establish clear update hierarchy and conflict resolution strategy
+
+## MVP Concerns
+- **Risk**: Scope creep extending development timeline
+  **Mitigation**: Strictly prioritize features based on user value and development complexity
+
+- **Risk**: User experience complexity due to dense information
+  **Mitigation**: Focus on simplification and progressive disclosure of complex details
+
+## Resource Constraints
+- **Risk**: Limited development resources for cross-platform support
+  **Mitigation**: Focus on iOS excellence before expanding to other platforms
+
+- **Risk**: Ongoing costs of AI summarization services
+  **Mitigation**: Batch processing and implementation of local models where feasible
+
+# Appendix  
+## Research Findings
+- Users primarily want simplified explanations of complex legislation
+- Push notifications significantly increase engagement with civic information
+- Visual representation of voting patterns improves information retention
+
+## Technical Specifications
+- Swift 5.0+ compatibility
+- iOS 14.0+ support
+- Network bandwidth optimization for cellular connections
+- Offline capability for previously loaded representative data
+</PRD> 

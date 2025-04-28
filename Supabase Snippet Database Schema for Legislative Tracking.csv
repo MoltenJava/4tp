@@ -1,0 +1,58 @@
+table_name,column_name,ordinal_position,data_type,is_nullable,column_default
+bill_sponsors,rep_id,1,uuid,NO,null
+bill_sponsors,bill_id,2,uuid,NO,null
+bill_sponsors,is_primary_sponsor,3,boolean,YES,false
+bill_sponsors,created_at,4,timestamp with time zone,YES,"timezone('utc'::text, now())"
+bills,bill_id,1,uuid,NO,gen_random_uuid()
+bills,title,2,text,NO,null
+bills,summary,3,text,YES,null
+bills,full_text_url,4,text,YES,null
+bills,introduced_date,5,timestamp with time zone,YES,null
+bills,scheduled_date,6,timestamp with time zone,YES,null
+bills,status,7,USER-DEFINED,YES,null
+bills,created_at,8,timestamp with time zone,YES,"timezone('utc'::text, now())"
+bills,updated_at,9,timestamp with time zone,YES,"timezone('utc'::text, now())"
+bills,official_id,10,text,YES,null
+committee_memberships,rep_id,1,uuid,NO,null
+committee_memberships,committee_id,2,uuid,NO,null
+committee_memberships,role,3,USER-DEFINED,YES,null
+committee_memberships,created_at,4,timestamp with time zone,YES,"timezone('utc'::text, now())"
+committees,committee_id,1,uuid,NO,gen_random_uuid()
+committees,name,2,text,NO,null
+committees,chamber,3,USER-DEFINED,YES,null
+committees,created_at,4,timestamp with time zone,YES,"timezone('utc'::text, now())"
+committees,updated_at,5,timestamp with time zone,YES,"timezone('utc'::text, now())"
+followed_representatives,user_id,1,uuid,NO,null
+followed_representatives,rep_id,2,uuid,NO,null
+followed_representatives,created_at,3,timestamp with time zone,YES,"timezone('utc'::text, now())"
+profiles,id,1,uuid,NO,null
+profiles,updated_at,2,timestamp with time zone,YES,"timezone('utc'::text, now())"
+profiles,created_at,3,timestamp with time zone,YES,"timezone('utc'::text, now())"
+profiles,latitude,4,double precision,YES,null
+profiles,longitude,5,double precision,YES,null
+profiles,zip_code,6,text,YES,null
+profiles,city,7,text,YES,null
+profiles,state,8,text,YES,null
+representatives,rep_id,1,uuid,NO,gen_random_uuid()
+representatives,full_name,2,text,NO,null
+representatives,photo_url,3,text,YES,null
+representatives,chamber,4,USER-DEFINED,NO,null
+representatives,district,5,text,YES,null
+representatives,party,6,text,YES,null
+representatives,bio,7,text,YES,null
+representatives,contact_email,8,text,YES,null
+representatives,contact_phone,9,text,YES,null
+representatives,contact_website,10,text,YES,null
+representatives,social_twitter,11,text,YES,null
+representatives,social_facebook,12,text,YES,null
+representatives,created_at,13,timestamp with time zone,YES,"timezone('utc'::text, now())"
+representatives,updated_at,14,timestamp with time zone,YES,"timezone('utc'::text, now())"
+votes,vote_id,1,uuid,NO,gen_random_uuid()
+votes,rep_id,2,uuid,NO,null
+votes,bill_id,3,uuid,NO,null
+votes,chamber,4,USER-DEFINED,NO,null
+votes,vote_date,5,timestamp with time zone,NO,null
+votes,position,6,USER-DEFINED,NO,null
+votes,ai_summary,7,text,YES,null
+votes,created_at,8,timestamp with time zone,YES,"timezone('utc'::text, now())"
+votes,updated_at,9,timestamp with time zone,YES,"timezone('utc'::text, now())"
